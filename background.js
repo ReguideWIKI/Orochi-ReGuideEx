@@ -139,7 +139,7 @@ async function submitCodesToOrochiViaUI(codes) {
                             inputField.click();
                             inputField.value = "";
                             inputField.dispatchEvent(new Event('input', { bubbles: true }));
-                            await new Promise(resolve => setTimeout(resolve, 50));
+                            await new Promise(resolve => setTimeout(resolve, 10));
 
                             // Nhập từng ký tự vào ô input
                             for (let char of code) {
@@ -190,9 +190,21 @@ async function submitCodesToOrochiViaUI(codes) {
 
                             if (window.totalCodeUsages >= 2) {
                                 // console.log(`Used 2 codes, reloading page...`);
-                                window.codeUsageCounts = {}; // Reset bộ đếm code
-                                window.totalCodeUsages = 0;
-                                location.reload();
+                                let maxRetries = 5;
+                                let retries = 0;
+                                let checkPopupAndReload = async () => {
+                                    let popupElement = document.evaluate('//*[@id="radix-:r0:"]', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                                    if (popupElement) {
+                                        window.codeUsageCounts = {}; // Reset bộ đếm code
+                                        window.totalCodeUsages = 0;
+                                        location.reload();
+                                    } else if (retries < maxRetries) {
+                                        retries++;
+                                        await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
+                                        checkPopupAndReload();
+                                    }
+                                };
+                                checkPopupAndReload();
                             }
                             
 
