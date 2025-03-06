@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "A A A Orochi",
+  "version": "1.0",
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "host_permissions": [
+    "https://orochi.network/*",
+    "https://discord.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
