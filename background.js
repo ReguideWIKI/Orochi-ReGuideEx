@@ -43,7 +43,7 @@ async function startBackgroundProcess() {
         let { stopRunning } = await chrome.storage.local.get("stopRunning");
         if (stopRunning) break;
         await fetchCodesFromDiscord(firstRun);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 5000));
     }
 }
 
