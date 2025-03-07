@@ -200,7 +200,7 @@ async function submitCodesToOrochiViaUI(codes) {
                                         location.reload();
                                     } else if (retries < maxRetries) {
                                         retries++;
-                                        await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
+                                        await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 5 seconds
                                         checkPopupAndReload();
                                     }
                                 };
